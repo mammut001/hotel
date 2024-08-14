@@ -4,13 +4,13 @@ import {create} from 'zustand'
 export type Lang = "english" | "french"
 
 export type Language ={
-  name: string,
+  language: string,
   updateLang: (lang:Lang) =>void
 }
 
 export const useLanguageStore = create<Language>() ((set) =>({
-  name:"french",
-  updateLang:(lang:Lang) => set({name:lang})
+  language:"french",
+  updateLang:(lang:Lang) => set({language:lang})
 }))
 type selectedDateStore = {
   date:string,

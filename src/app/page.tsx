@@ -13,7 +13,7 @@ import { HOTEL_INFO } from "@/data/room-data";
 import {Rooms} from "@/components/rooms";
 
 export default function Page() {
-  const language = useLanguageStore(state => state.name)
+  const language = useLanguageStore(state => state.language)
   const updateLanguage = useLanguageStore(state => state.updateLang)
   const roomAmentities = (index:number)=>{
     if (language === "english"){
@@ -133,7 +133,10 @@ export default function Page() {
                 description={roomDescription(room.id)}
                 amenities={roomAmentities(room.id)}
                 price={room.price}
-                availability={room.available}></Rooms>
+                availability={room.available}>
+
+              </Rooms>
+
             ))
           }
         </Section>
