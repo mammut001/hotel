@@ -54,6 +54,7 @@ export default function Page() {
                 English
               </Badge>
             </div>
+            
             <p className="max-w-md text-pretty font-mono text-sm text-muted-foreground print:text-[12px]">
               {aboutContent}
             </p>

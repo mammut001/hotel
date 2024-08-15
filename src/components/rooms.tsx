@@ -36,7 +36,7 @@ export function Rooms({ id, name, description, link, amenities,  price, availabi
         return res
     }
     return(
-        <div className="rounded-lg border-2 flex">
+        <div className=" rounded-lg border-2 flex">
         <div>
             <h2 className="text-center">{name}</h2>
             <p className="ml-2">{description}</p>
@@ -55,8 +55,8 @@ export function Rooms({ id, name, description, link, amenities,  price, availabi
             }
         </div>
 
-        <div className="mt-4 mr-4 ml-4">
-            <Avatar className="size-28">
+        <div className="flex-col mt-4 mr-4 ml-4">
+            <Avatar className="w-15 h-15 lg:w-28 lg:h-28">
                 <AvatarImage alt={ROOM_DATA.rooms[id].name} src={ROOM_DATA.rooms[id].imageUrl}/>
                 <AvatarFallback>{ROOM_DATA.rooms[id].id}</AvatarFallback>
             </Avatar>
