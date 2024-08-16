@@ -10,7 +10,7 @@ import {useLanguageStore} from "@/store/useLanguageStore";
 
 import {ROOM_DATA} from "@/data/room-data";
 import { HOTEL_INFO } from "@/data/room-data";
-import {Rooms} from "@/components/rooms";
+import {RoomCard} from "@/components/room-card";
 
 export default function Page() {
   const language = useLanguageStore(state => state.language)
@@ -127,7 +127,7 @@ export default function Page() {
           </h2>
           {
             ROOM_DATA.rooms.map((room) => (
-              <Rooms
+              <RoomCard
                 key={room.id}
                 id={room.id}
                 name={room.name}
@@ -136,7 +136,7 @@ export default function Page() {
                 price={room.price}
                 availability={room.available}>
 
-              </Rooms>
+              </RoomCard>
 
             ))
           }

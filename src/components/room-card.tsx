@@ -12,7 +12,7 @@ interface Props {
   availability: boolean;
 }
 
-export function Rooms({ id, name, description, link, amenities,  price, availability}: Props) {
+export function RoomCard({ id, name, description, link, amenities,  price, availability}: Props) {
     const defaultLanguage = useLanguageStore(state => state.language)
     const roomAvailability =() =>{
         let res = ""
