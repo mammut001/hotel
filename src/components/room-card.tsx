@@ -2,6 +2,8 @@ import {HOTEL_INFO, ROOM_DATA} from "@/data/room-data";
 import { Badge } from "@/components/ui/badge";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {useLanguageStore} from "@/store/useLanguageStore";
+import { useRouter } from 'next/navigation';
+
 interface Props {
   id: number
   name: string;
@@ -14,6 +16,8 @@ interface Props {
 
 export function RoomCard({ id, name, description, link, amenities,  price, availability}: Props) {
     const defaultLanguage = useLanguageStore(state => state.language)
+    const router = useRouter();
+
     const roomAvailability =() =>{
         let res = ""
         if (defaultLanguage === "english"){
@@ -35,8 +39,13 @@ export function RoomCard({ id, name, description, link, amenities,  price, avail
         }
         return res
     }
+    const handleSelect = ()=>{
+        console.log("Name is" + name)
+        router.push(`/rooms/${id}`)
+    }
     return(
-        <div className=" rounded-lg border-2 flex">
+
+        <div onClick={handleSelect} className="rounded-lg border-2 flex hover:border-green-700 hover:cursor-pointer">
         <div>
             <h2 className="text-center">{name}</h2>
             <p className="ml-2">{description}</p>

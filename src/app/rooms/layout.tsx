@@ -9,11 +9,7 @@ const inter = Inter({
     display: "swap",
 });
 
-export default function Rooms({
-                                           children,
-                                       }: {
-    children: React.ReactNode;
-}) {
+export default function Rooms({children,}: { children: React.ReactNode;}) {
     return (
         <html lang="en" className={inter.className}>
         <body>{children}</body>
