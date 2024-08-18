@@ -1,15 +1,16 @@
 "use client"
 import { notFound } from 'next/navigation';
 import {ROOM_DATA} from "@/data/room-data";
-import {number} from "prop-types";
 import {useLanguageStore} from "@/store/useLanguageStore";
 import { Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
-
+import PopUpWindow from "@/components/popup";
+import {useModalStore} from "@/store/useModalStore";
 export default function RoomPage({ params }: { params: { RoomId: string } }) {
     const roomId = decodeURIComponent(params.RoomId)
     const maxRoomId = ROOM_DATA.rooms.length
     const defaultLanguage = useLanguageStore(state => state.language)
+    const setModalOpen = useModalStore(state => state.setOpen)
     const validateRoomId = () => {
         let roomIdNumFormat = Number(roomId)
         return roomIdNumFormat >= 0 && roomIdNumFormat < maxRoomId
@@ -22,7 +23,7 @@ export default function RoomPage({ params }: { params: { RoomId: string } }) {
         defaultLanguage === "english"
             ? ROOM_DATA.rooms[Number(roomId)].description
             : ROOM_DATA.rooms[Number(roomId)].description_fr;
-
+    console.log()
     return (
 
         <main className="container mx-auto p-4 relative min-h-screen">
@@ -34,11 +35,11 @@ export default function RoomPage({ params }: { params: { RoomId: string } }) {
             </section>
 
             <div className="fixed right-4 bottom-4">
-                <Button variant="outline" className="rounded-full p-3 shadow-lg transform transition-transform duration-500 ease-in-out hover:scale-110 hover:bg-green-500 hover:text-black" size="icon">
+                <Button onClick={()=>{setModalOpen()}} variant="outline" className="rounded-full p-3 shadow-lg transform transition-transform duration-500 ease-in-out hover:scale-110 hover:bg-green-500 hover:text-black" size="icon">
                     <Plus className="h-6 w-6"/>
                 </Button>
             </div>
-
+            <PopUpWindow/>
         </main>
     )
 }
