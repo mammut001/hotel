@@ -1,10 +1,7 @@
 "use client"
 import { Section } from "@/components/ui/section";
 import { useLanguageStore } from "@/store/useLanguageStore";
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import React from "react";
 
 
 export default function Rooms() {

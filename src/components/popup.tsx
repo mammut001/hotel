@@ -5,10 +5,13 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { MobileDateTimePicker } from '@mui/x-date-pickers';
+import { useMediaQuery } from "@mui/system";
 
 const PopUpWindow = ()=>{
     const modalStatus = useModalStore(state =>state.openStatus)
     const setModalVisible = useModalStore(state => state.setOpen)// when onClose, call setVisible to false.
+    const isMobile = useMediaQuery('(pointer: coarse)');
 
     return(
         <Popup
@@ -22,19 +25,42 @@ const PopUpWindow = ()=>{
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DemoContainer components={['DateTimePicker']}>
                   <div className="flex flex-col md:flex-row md:space-y-0 md:space-x-4">
-                    <DateTimePicker
-                      label="Start"
-                      orientation={'portrait'}
+                    {
+                      isMobile?
+                        (
+                          <>
+                            <MobileDateTimePicker
+                              label="Start"
+                              orientation={'portrait'}
 
-                    />
+                            />
+                            <MobileDateTimePicker
+                              label="End"
+                              closeOnSelect={false}
+                              orientation={'portrait'}
 
-                    <DateTimePicker
-                      label="End"
-                      closeOnSelect={false}
-                      orientation={'portrait'}
+                              className=" max-w-xs sm:max-w-sm md:max-w-md bg-white rounded-lg mt-2"
+                            />
+                          </>
+                        ):
+                        (
+                          <>
+                            <DateTimePicker
+                              label="Start"
+                              orientation={'portrait'}
 
-                      className=" max-w-xs sm:max-w-sm md:max-w-md bg-white rounded-lg mt-2"
-                    />
+                            />
+                            <DateTimePicker
+                              label="End"
+                              closeOnSelect={false}
+                              orientation={'portrait'}
+
+                              className=" max-w-xs sm:max-w-sm md:max-w-md bg-white rounded-lg mt-2"
+                            />
+
+                          </>
+                        )
+                    }
 
                   </div>
 

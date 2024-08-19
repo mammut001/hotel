@@ -38,6 +38,7 @@ export default function RoomPage({ params }: { params: { RoomId: string } }) {
                 <Button onClick={()=>{setModalOpen()}} variant="outline" className="rounded-full p-3 shadow-lg transform transition-transform duration-500 ease-in-out hover:scale-110 hover:bg-green-500 hover:text-black" size="icon">
                     <Plus className="h-6 w-6"/>
                 </Button>
+
             </div>
             <PopUpWindow/>
         </main>
