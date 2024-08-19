@@ -1,4 +1,4 @@
-const {nextui} = require("@nextui-org/react");
+import {nextui} from '@nextui-org/theme'
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -8,6 +8,9 @@ module.exports = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}'
   ],
   prefix: "",
   theme: {
@@ -76,7 +79,7 @@ module.exports = {
     },
   },
   plugins: [
-      require("tailwindcss-animate"),
-      nextui(),
+    require("tailwindcss-animate"),
+    nextui(),
   ],
 }
