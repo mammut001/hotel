@@ -10,7 +10,7 @@ export default function RoomPage({ params }: { params: { RoomId: string } }) {
     const roomId = decodeURIComponent(params.RoomId)
     const maxRoomId = ROOM_DATA.rooms.length
     const defaultLanguage = useLanguageStore(state => state.language)
-    const setModalOpen = useModalStore(state => state.setOpen)
+    const toggleModalOpen = useModalStore(state => state.setOpen)
     const validateRoomId = () => {
         let roomIdNumFormat = Number(roomId)
         return roomIdNumFormat >= 0 && roomIdNumFormat < maxRoomId
@@ -35,7 +35,7 @@ export default function RoomPage({ params }: { params: { RoomId: string } }) {
             </section>
 
             <div className="fixed right-4 bottom-4">
-                <Button onClick={()=>{setModalOpen()}} variant="outline" className="rounded-full p-3 shadow-lg transform transition-transform duration-500 ease-in-out hover:scale-110 hover:bg-green-500 hover:text-black" size="icon">
+                <Button onClick={()=>{toggleModalOpen()}} variant="outline" className="rounded-full p-3 shadow-lg transform transition-transform duration-500 ease-in-out hover:scale-110 hover:bg-green-500 hover:text-black" size="icon">
                     <Plus className="h-6 w-6"/>
                 </Button>
 
