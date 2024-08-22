@@ -54,7 +54,10 @@ const PopUpWindow = ()=>{
             date: dates,
             phoneNumber: tel
           }
-          const res = await submitReservation(reservation);
+          const start = dates[0].date
+          const end = dates[1].date
+
+          const res = await submitReservation(start, end, tel);
 
         }
         catch (error){
