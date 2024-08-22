@@ -9,10 +9,12 @@ import dayjs, { Dayjs } from "dayjs";
 import { DateTimeField } from '@mui/x-date-pickers/DateTimeField';
 import { useMediaQuery } from "@mui/system";
 
-import { useCheckinStore, useSubmitCheckStore } from "@/store/useCheckinStore";
+import { submitBody, useCheckinStore, useSubmitCheckStore } from "@/store/useCheckinStore";
 import { MuiTelInput } from "mui-tel-input";
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
+import { submitReservation } from "@/app/service/submitReservation";
+import { CheckinStore } from "@/store/useCheckinStore";
 
 
 const PopUpWindow = ()=>{
@@ -31,9 +33,9 @@ const PopUpWindow = ()=>{
     const setValidationTrue = useSubmitCheckStore(state => state.setTrue)
     const setValidationFalse = useSubmitCheckStore(state => state.setFalse)
 
-    const handleSubmit= () => {
-      const checkInDate = isMobile ? dates[2].date: dates[0].date
-      const checkOutDate = isMobile ? dates[3].date: dates[1].date
+    const handleSubmit= async ()  => {
+      const checkInDate = dates[0].date
+      const checkOutDate = dates[1].date
 
       console.log("iS MOBILE"+isMobile)
 
@@ -47,12 +49,26 @@ const PopUpWindow = ()=>{
         setValidationTrue()
         toggleModalOff()
         console.log("Valid ")
+        try {
+          const reservation:submitBody = {
+            date: dates,
+            phoneNumber: tel
+          }
+          const res = await submitReservation(reservation);
+
+        }
+        catch (error){
+          console.error("FAILED",error)
+        }
+
       }
       else{
         setValidationFalse()
         console.log("Not Valid ")
 
       }
+
+
     }
   return(
       <Popup
@@ -95,15 +111,15 @@ const PopUpWindow = ()=>{
                             <DateTimePicker
                               label="Start"
                               orientation={'portrait'}
-                              value={dates[2].date}
-                              onChange={(newValue) => updateCheckinDate(2, newValue || dayjs())}
+                              value={dates[0].date}
+                              onChange={(newValue) => updateCheckinDate(0, newValue || dayjs())}
                             />
                             <DateTimePicker
                               label="End"
                               closeOnSelect={false}
                               orientation={'portrait'}
-                              value={dates[3].date}
-                              onChange={(newValue) => updateCheckinDate(3, newValue || dayjs())}
+                              value={dates[1].date}
+                              onChange={(newValue) => updateCheckinDate(1, newValue || dayjs())}
 
                               className=" max-w-xs sm:max-w-sm md:max-w-md bg-white rounded-lg mt-2"
                             />

@@ -6,7 +6,7 @@ type DateEntryStore = {
   label:string,
 }
 
-type CheckinStore = {
+export type CheckinStore = {
   date: DateEntryStore[]
   updateDate:(id:number,newDate:dayjs.Dayjs) => void,
   resetDate:(id:number) => void,
@@ -16,12 +16,14 @@ type CheckinStore = {
 
 }
 
+export type submitBody ={
+  date: DateEntryStore[]
+  phoneNumber:string
+}
+
 const initialDates:DateEntryStore[] = [
   {id:0, date: dayjs('2001-01-01'), label:'CheckIn'},
   {id:1, date: dayjs('2001-01-02'), label:'CheckOut'},
-  {id:2, date: dayjs('2001-01-03'), label:'CheckIn_Mobile'},
-  {id:3, date: dayjs('2001-01-04'), label:'CheckOut_Mobile'},
-
 ]
 
 
