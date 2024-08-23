@@ -1,7 +1,7 @@
 import { submitBody } from "@/store/useCheckinStore";
 import dayjs from "dayjs";
 
-export const submitReservation =  async (start:dayjs.Dayjs, end:dayjs.Dayjs, tel:string) => {
+export const submitReservation =  async (start:dayjs.Dayjs, end:dayjs.Dayjs, phoneNumber:string) => {
 
 
   const response = await fetch(`http://localhost:8080/api/v1.1/submitReservation`, {
@@ -12,7 +12,7 @@ export const submitReservation =  async (start:dayjs.Dayjs, end:dayjs.Dayjs, tel
     body: JSON.stringify({
       start,
       end,
-      tel
+      phoneNumber
     }),
   })
   if (response.ok){
