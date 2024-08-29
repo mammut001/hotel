@@ -14,26 +14,51 @@ import { MuiTelInput } from "mui-tel-input";
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import { submitReservation } from "@/app/service/submitReservation";
-import { CheckinStore } from "@/store/useCheckinStore";
-
+import TextField from '@mui/material/TextField';
+import { useOTPTextFieldStore } from "@/store/useOTPStore";
+import { requestOTP } from "@/app/service/requestOTP";
 
 const PopUpWindow = ()=>{
-    const modalStatus = useModalStore(state =>state.openStatus)
-    const toggleModalOff = useModalStore(state => state.setClose)// when onClose, call setVisible to false.
+  const modalStatus = useModalStore(state =>state.openStatus)
+  const toggleModalOff = useModalStore(state => state.setClose)// when onClose, call setVisible to false.
+  const dates = useCheckinStore(state=>state.date)
+  const updateCheckinDate = useCheckinStore(state => state.updateDate)
+  const resetDate = useCheckinStore(state => state.resetDate)
+  const [value, setValue] = React.useState<Dayjs | null>(dayjs('2022-04-17T15:30'))
+  const isMobile = useMediaQuery('(pointer: coarse)');const tel = useCheckinStore(state=> state.phoneNumber)
+  const updateTel = useCheckinStore(state => state.updatePhoneNumber)
+  const warningMsg = "Please check your dates and number"
+  const displayWarningMsgBool = useSubmitCheckStore(state => state.isValid)
+  const setValidationTrue = useSubmitCheckStore(state => state.setTrue)
+  const setValidationFalse = useSubmitCheckStore(state => state.setFalse)
 
-    const dates = useCheckinStore(state=>state.date)
-    const updateCheckinDate = useCheckinStore(state => state.updateDate)
-    const resetDate = useCheckinStore(state => state.resetDate)
-    const [value, setValue] = React.useState<Dayjs | null>(dayjs('2022-04-17T15:30'))
-    const isMobile = useMediaQuery('(pointer: coarse)');
-    const tel = useCheckinStore(state=> state.phoneNumber)
-    const updateTel = useCheckinStore(state => state.updatePhoneNumber)
-    const warningMsg = "Please check your dates and number"
-    const displayWarningMsgBool = useSubmitCheckStore(state => state.isValid)
-    const setValidationTrue = useSubmitCheckStore(state => state.setTrue)
-    const setValidationFalse = useSubmitCheckStore(state => state.setFalse)
+  const textFieldOnDisplay = useOTPTextFieldStore(state => state.openStatus)
+  const setTextfieldOnDisplayTrue = useOTPTextFieldStore(state => state.setOpen)
+  const setTextfieldOnDisplayFalse = useOTPTextFieldStore(state => state.setClose)
+  const buttonTextIndex = useOTPTextFieldStore(state => state.buttonTextIndex)
+  const buttonText = ["Send OTP", "Validate OTP"]
 
-    const handleSubmit= async ()  => {
+  const [otpCode, setOTPCode] = React.useState<string>('')
+
+  const handleValidateOTP = async  () =>{
+    console.log('110')
+    try {
+      const start = dates[0].date
+      const end = dates[1].date
+
+      const res = await submitReservation(start,end,tel,otpCode);
+      if (res){
+        toggleModalOff()
+      }
+      else{
+        console.log("ERROR, not validated")
+      }
+    }
+    catch (err){
+      console.error("ERROR",err)
+    }
+  }
+  const handleRequestOTP= async ()  => {
       const checkInDate = dates[0].date
       const checkOutDate = dates[1].date
 
@@ -47,7 +72,7 @@ const PopUpWindow = ()=>{
       const isTelValid = tel && tel.length > 6
       if(isTelValid && areDatesValid){
         setValidationTrue()
-        toggleModalOff()
+        setTextfieldOnDisplayTrue()
         console.log("Valid ")
         try {
           const reservation:submitBody = {
@@ -57,7 +82,7 @@ const PopUpWindow = ()=>{
           const start = dates[0].date
           const end = dates[1].date
 
-          const res = await submitReservation(start, end, tel);
+          const res = await requestOTP(tel);
 
         }
         catch (error){
@@ -139,15 +164,26 @@ const PopUpWindow = ()=>{
               </DemoContainer>
             </LocalizationProvider>
             <MuiTelInput defaultCountry="CA" inputProps={{style:{fontSize:'12px'}}}   size={'small'} preferredCountries={['CA']} value={tel} onChange={(newInput) => updateTel(newInput)} />
-            <Button onClick={handleSubmit} variant="contained" endIcon={<SendIcon />}>
-              Confirm
-            </Button>
+            {textFieldOnDisplay&&
+              <TextField onChange={event => setOTPCode(event.target.value)} type={"number"} inputMode={"numeric"} id="outlined-basic" label="Your OTP Code" variant="outlined" />
+            }
+            {textFieldOnDisplay?
+              <Button onClick={handleValidateOTP} variant="contained" endIcon={<SendIcon />}>
+                {textFieldOnDisplay?buttonText[buttonTextIndex[1]]:buttonText[buttonTextIndex[0]]}
+              </Button>:
+              <Button onClick={handleRequestOTP} variant="contained" endIcon={<SendIcon />}>
+            {textFieldOnDisplay?buttonText[buttonTextIndex[1]]:buttonText[buttonTextIndex[0]]}
+          </Button>
+
+          }
               {
                 !displayWarningMsgBool&&
                   <p className="text-center text-red-500">
                     {warningMsg}
                   </p>
               }
+
+
           </div>
 
         </div>

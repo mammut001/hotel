@@ -1,7 +1,7 @@
 import { submitBody } from "@/store/useCheckinStore";
 import dayjs from "dayjs";
 
-export const submitReservation =  async (start:dayjs.Dayjs, end:dayjs.Dayjs, phoneNumber:string) => {
+export const submitReservation =  async (start:dayjs.Dayjs, end:dayjs.Dayjs, phoneNumber:string,otpCode:string):Promise<boolean> => {
 
 
   const response = await fetch(`http://localhost:8080/api/v1.1/submitReservation`, {
@@ -12,14 +12,17 @@ export const submitReservation =  async (start:dayjs.Dayjs, end:dayjs.Dayjs, pho
     body: JSON.stringify({
       start,
       end,
-      phoneNumber
+      phoneNumber,
+      otpCode
     }),
   })
   if (response.ok){
     console.log(response)
+    return true
   }
   else{
-    throw new Error(`Server responded with ${response.status}: ${response.statusText}`);
+    console.log(`Server responded with ${response.status}: ${response.statusText}`);
+    return false
   }
 
 }
