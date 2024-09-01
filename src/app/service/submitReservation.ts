@@ -18,6 +18,8 @@ export const submitReservation =  async (start:dayjs.Dayjs, end:dayjs.Dayjs, pho
   })
   if (response.ok){
     console.log(response)
+    const data = await response.json()
+    console.log(data)
     return true
   }
   else{

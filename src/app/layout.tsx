@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import React from "react";
 import { HOTEL_INFO } from "@/data/room-data";
+import ClientInitializer from "@/components/ClientInitializer";
 
 export const metadata: Metadata = {
   title: `${HOTEL_INFO.name} | ${HOTEL_INFO.description}`,
@@ -22,8 +23,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
+
   return (
     <html lang="en" className={inter.className}>
+      <ClientInitializer/>
       <body>{children}</body>
       <Analytics />
     </html>

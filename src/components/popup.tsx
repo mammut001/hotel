@@ -17,6 +17,7 @@ import { submitReservation } from "@/app/service/submitReservation";
 import TextField from '@mui/material/TextField';
 import { useOTPTextFieldStore } from "@/store/useOTPStore";
 import { requestOTP } from "@/app/service/requestOTP";
+import { useRouter } from 'next/navigation';
 
 const PopUpWindow = ()=>{
   const modalStatus = useModalStore(state =>state.openStatus)
@@ -39,6 +40,7 @@ const PopUpWindow = ()=>{
   const buttonText = ["Send OTP", "Validate OTP"]
 
   const [otpCode, setOTPCode] = React.useState<string>('')
+  const router = useRouter();
 
   const handleValidateOTP = async  () =>{
     console.log('110')
@@ -49,6 +51,8 @@ const PopUpWindow = ()=>{
       const res = await submitReservation(start,end,tel,otpCode);
       if (res){
         toggleModalOff()
+        router.push(`/confirmation/1`)
+
       }
       else{
         console.log("ERROR, not validated")
