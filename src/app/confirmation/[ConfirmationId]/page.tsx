@@ -27,7 +27,7 @@ export default function RoomPage({ params }: { params: { ConfirmationId: string 
 
   if (!validConfirmationId()) {
     console.log("UUID not found:", confirmationId)
-    return notFound();
+    return notFound()
   }
   const selectedObject = confirmationObjects.filter(confirmationObject => confirmationObject.uuid === confirmationId)
   return (

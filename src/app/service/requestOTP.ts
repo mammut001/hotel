@@ -12,6 +12,7 @@ export const requestOTP =  async (phoneNumber:string) => {
   })
   if (response.ok){
     console.log(response)
+    return await response.json()
   }
   else{
     throw new Error(`Server responded with ${response.status}: ${response.statusText}`);

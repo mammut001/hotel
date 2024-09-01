@@ -14,6 +14,7 @@ export default function ClientInitializer() {
         hasLoaded.current = true
         const data = await fetchConfirmations()
         await loadConfirmationObjectsOnStart(data['data'])
+        console.log("Loaded confirmation objects:", )
       } catch (error) {
         console.error("Failed to load confirmations:", error)
       }

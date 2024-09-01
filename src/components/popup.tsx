@@ -1,5 +1,5 @@
 import Popup from 'reactjs-popup';
-import React from 'react';
+import React, { useEffect } from "react";
 import {useModalStore} from "@/store/useModalStore";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -18,6 +18,7 @@ import TextField from '@mui/material/TextField';
 import { useOTPTextFieldStore } from "@/store/useOTPStore";
 import { requestOTP } from "@/app/service/requestOTP";
 import { useRouter } from 'next/navigation';
+import { ConfirmationObject, useConfirmationStore } from "@/store/useConfirmationStore";
 
 const PopUpWindow = ()=>{
   const modalStatus = useModalStore(state =>state.openStatus)
@@ -40,7 +41,29 @@ const PopUpWindow = ()=>{
   const buttonText = ["Send OTP", "Validate OTP"]
 
   const [otpCode, setOTPCode] = React.useState<string>('')
+  const [pushedUrl, setPushedUrl] = React.useState('');
+
+  const addItem = useConfirmationStore(state => state.addItem)
+
   const router = useRouter();
+
+
+  useEffect(() => {
+    if (pushedUrl && pushedUrl.length > 0){
+      router.push(`/confirmation/${pushedUrl}`)
+      // TODO call update confirmationObject here to update the object[reservation info
+      let newConfirmation: ConfirmationObject = {
+        start: dates[0].date.toString(),
+        end: dates[1].date.toString(),
+        phoneNumber:tel,
+        uuid:pushedUrl
+      }
+      addItem(newConfirmation)
+      console.log('1198')
+      console.log(pushedUrl)
+
+    }
+  }, [pushedUrl]);
 
   const handleValidateOTP = async  () =>{
     console.log('110')
@@ -51,8 +74,8 @@ const PopUpWindow = ()=>{
       const res = await submitReservation(start,end,tel,otpCode);
       if (res){
         toggleModalOff()
-        router.push(`/confirmation/1`)
-
+        console.log(res['uuid'])
+        setPushedUrl(res["uuid"])
       }
       else{
         console.log("ERROR, not validated")
@@ -85,8 +108,7 @@ const PopUpWindow = ()=>{
           }
           const start = dates[0].date
           const end = dates[1].date
-
-          const res = await requestOTP(tel);
+          await requestOTP(tel);
 
         }
         catch (error){
