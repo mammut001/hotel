@@ -21,14 +21,19 @@ import { useRouter } from 'next/navigation';
 import { ConfirmationObject, useConfirmationStore } from "@/store/useConfirmationStore";
 
 const PopUpWindow = ()=>{
+  const isMobile = useMediaQuery('(pointer: coarse)')
+
+
   const modalStatus = useModalStore(state =>state.openStatus)
   const toggleModalOff = useModalStore(state => state.setClose)// when onClose, call setVisible to false.
+
   const dates = useCheckinStore(state=>state.date)
   const updateCheckinDate = useCheckinStore(state => state.updateDate)
   const resetDate = useCheckinStore(state => state.resetDate)
-  const [value, setValue] = React.useState<Dayjs | null>(dayjs('2022-04-17T15:30'))
-  const isMobile = useMediaQuery('(pointer: coarse)');const tel = useCheckinStore(state=> state.phoneNumber)
+  const tel = useCheckinStore(state=> state.phoneNumber)
   const updateTel = useCheckinStore(state => state.updatePhoneNumber)
+
+
   const warningMsg = "Please check your dates and number"
   const displayWarningMsgBool = useSubmitCheckStore(state => state.isValid)
   const setValidationTrue = useSubmitCheckStore(state => state.setTrue)
@@ -51,7 +56,6 @@ const PopUpWindow = ()=>{
   useEffect(() => {
     if (pushedUrl && pushedUrl.length > 0){
       router.push(`/confirmation/${pushedUrl}`)
-      // TODO call update confirmationObject here to update the object[reservation info
       let newConfirmation: ConfirmationObject = {
         start: dates[0].date.toString(),
         end: dates[1].date.toString(),
@@ -70,12 +74,16 @@ const PopUpWindow = ()=>{
     try {
       const start = dates[0].date
       const end = dates[1].date
-
       const res = await submitReservation(start,end,tel,otpCode);
       if (res){
         toggleModalOff()
+        setTextfieldOnDisplayFalse()
+        updateTel("") // reset phone# input text field
+        resetDate(0) // reset check in date
+        resetDate(1) // reset checkout date
         console.log(res['uuid'])
         setPushedUrl(res["uuid"])
+
       }
       else{
         console.log("ERROR, not validated")
@@ -102,12 +110,6 @@ const PopUpWindow = ()=>{
         setTextfieldOnDisplayTrue()
         console.log("Valid ")
         try {
-          const reservation:submitBody = {
-            date: dates,
-            phoneNumber: tel
-          }
-          const start = dates[0].date
-          const end = dates[1].date
           await requestOTP(tel);
 
         }

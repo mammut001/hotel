@@ -12,7 +12,7 @@ export default function RoomPage({ params }: { params: { ConfirmationId: string 
   }, [confirmationObjects])
 
   useEffect(() => {
-    if (confirmationObjects.length > 0) {
+    if (confirmationObjects.length >= 0) {
       setIsLoading(false)
     }
   }, [confirmationObjects]);
