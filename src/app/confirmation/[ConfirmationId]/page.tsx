@@ -2,19 +2,33 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useConfirmationStore } from "@/store/useConfirmationStore";
 import { notFound } from "next/navigation";
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
+import { useRouter } from 'next/navigation';
+
 
 export default function RoomPage({ params }: { params: { ConfirmationId: string } }) {
   const confirmationId = decodeURIComponent(params.ConfirmationId);
   const confirmationObjects = useConfirmationStore(state => state.confirmationObject);
   const [isLoading, setIsLoading] = useState(true);
+
+  const router = useRouter();
+
+
+
   useEffect(() => {
     console.log("Loaded confirmation objects:", confirmationObjects)
   }, [confirmationObjects])
 
   useEffect(() => {
-    if (confirmationObjects.length >= 0) {
+    if (confirmationObjects.length == 0){
+      router.push('/confirmation');
+    }
+    else
+    {
       setIsLoading(false)
     }
+
   }, [confirmationObjects]);
 
   const validConfirmationId = () => {
@@ -22,7 +36,14 @@ export default function RoomPage({ params }: { params: { ConfirmationId: string 
   }
 
   if (isLoading) {
-    return <p>Loading...</p>
+    return(
+      <>
+        <Box sx={{ width: '100%' }}>
+          <LinearProgress />
+        </Box>
+      </>
+      )
+
   }
 
   if (!validConfirmationId()) {

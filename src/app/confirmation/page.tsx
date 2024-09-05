@@ -8,8 +8,8 @@ export default function Confirmation() {
   const language = useLanguageStore(state => state.language);
 
   const content = language === "english"
-    ? "Welcome to the Confirmation page!"
-    : "Bienvenue sur la page de confirmation !";
+    ? "Sorry, the page you are trying to access does not exist!"
+    : "Désolé, la page à laquelle vous essayez d'accéder n'existe pas";
 
   return (
     <main className="container mx-auto p-4">
@@ -18,7 +18,6 @@ export default function Confirmation() {
         <p className="text-center font-mono text-sm text-muted-foreground">
           {content}
         </p>
-
       </section>
 
     </main>

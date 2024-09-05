@@ -60,7 +60,7 @@ const PopUpWindow = ()=>{
         start: dates[0].date.toString(),
         end: dates[1].date.toString(),
         phoneNumber:tel,
-        uuid:pushedUrl
+        uuid:pushedUrl,
       }
       addItem(newConfirmation)
       console.log('1198')
