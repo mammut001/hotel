@@ -4,6 +4,13 @@ import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {useLanguageStore} from "@/store/useLanguageStore";
 import { useRouter } from 'next/navigation';
 
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import "swiper/css";
+import "swiper/css/pagination";
+import { Pagination, Mousewheel } from "swiper/modules";
+
+
 interface Props {
   id: number
   name: string;
@@ -48,12 +55,31 @@ export function RoomCard({ id, name, description, link, amenities,  price, avail
       <div className="rounded-lg border-2 flex flex-col hover:border-green-700 hover:cursor-pointer w-full">
           <div className="flex flex-col w-full">
               <div className="w-full">
-                  <div className=" mt-4 mr-4 ml-4 flex justify-center">
-                      <Avatar className="w-15 h-15 lg:w-28 lg:h-28">
-                          <AvatarImage alt={ROOM_DATA.rooms[id].name} src={ROOM_DATA.rooms[id].imageUrl} />
-                          <AvatarFallback>{ROOM_DATA.rooms[id].id}</AvatarFallback>
-                      </Avatar>
-                  </div>
+                  {/*<div className=" mt-4 mr-4 ml-4 flex justify-center">*/}
+                  {/*    <Avatar className="w-15 h-15 lg:w-28 lg:h-28">*/}
+                  {/*        <AvatarImage alt={ROOM_DATA.rooms[id].name} src={ROOM_DATA.rooms[id].imageUrl} />*/}
+                  {/*        <AvatarFallback>{ROOM_DATA.rooms[id].id}</AvatarFallback>*/}
+                  {/*    </Avatar>*/}
+                  {/*</div>*/}
+                  <Swiper
+                    direction={"horizontal"}
+                    pagination={{
+                        clickable: true,
+                    }}
+                    mousewheel={true}
+                    modules={[Pagination,Mousewheel]}
+                    onSlideChange={() => console.log("slide change")}
+                    onSwiper={(swiper) => console.log(swiper)}
+                    className="h-32"
+                  >
+                      <SwiperSlide className="bg-amber-200">Room Picture 1</SwiperSlide>
+                      <SwiperSlide className="bg-emerald-200">Room Picture 2</SwiperSlide>
+                      <SwiperSlide className="bg-teal-400">Room Picture 3</SwiperSlide>
+                      <SwiperSlide className="bg-sky-700">Room Picture 4</SwiperSlide>
+                      <SwiperSlide className="bg-fuchsia-300">Room Picture 5</SwiperSlide>
+                      <SwiperSlide className="bg-rose-400">Room Picture 6</SwiperSlide>
+                  </Swiper>
+
                   {amenities.map((amenity) => (
                     <Badge
                       className="px-1 py-0 text-[10px] print:px-1 print:py-0.5 print:text-[8px] print:leading-tight mr-2 mb-2 ml-2 "

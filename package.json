@@ -58,6 +58,7 @@
     "reactjs-popup": "^2.0.6",
     "reflect-metadata": "^0.2.2",
     "styled-components": "^6.1.12",
+    "swiper": "^11.1.12",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
     "type-graphql": "^2.0.0-beta.6",
