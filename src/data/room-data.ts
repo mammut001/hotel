@@ -26,6 +26,12 @@ export const ROOM_DATA = {
         { english: "Complimentary breakfast", french: "Petit-déjeuner offert" },
         { english: "24-hour room service", french: "Service en chambre 24h/24" }
       ],
+      rooms_img_url: [
+        "/room_1_1.jpeg",
+        "/room_1_2.jpeg",
+        "/room_1_3.jpeg",
+
+      ],
       price: 95,
       available: true,
     },
@@ -42,6 +48,12 @@ export const ROOM_DATA = {
         { english: "Complimentary toiletries", french: "Articles de toilette offerts" },
         { english: "24-hour front desk service", french: "Réception 24h/24" }
       ],
+      rooms_img_url: [
+        "/room_2_1.jpeg",
+        "/room_2_2.jpeg",
+        "/room_2_3.jpeg",
+
+      ],
       price: 76,
       available: true,
     },
@@ -57,6 +69,11 @@ export const ROOM_DATA = {
         { english: "Mini-bar", french: "Mini-bar" },
         { english: "Climate control", french: "Contrôle de climat" },
         { english: "Daily housekeeping", french: "Service de ménage quotidien" }
+      ],
+      rooms_img_url: [
+        "/room_3_1.jpeg",
+        "/room_3_2.jpeg",
+        "/room_3_3.jpeg",
       ],
       price: 120,
       available: true,

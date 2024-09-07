@@ -8,7 +8,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import "swiper/css/pagination";
-import { Pagination, Mousewheel } from "swiper/modules";
+import "swiper/css/navigation"
+import { Navigation } from 'swiper/modules';
+import Image from 'next/image';
 
 
 interface Props {
@@ -55,29 +57,31 @@ export function RoomCard({ id, name, description, link, amenities,  price, avail
       <div className="rounded-lg border-2 flex flex-col hover:border-green-700 hover:cursor-pointer w-full">
           <div className="flex flex-col w-full">
               <div className="w-full">
-                  {/*<div className=" mt-4 mr-4 ml-4 flex justify-center">*/}
-                  {/*    <Avatar className="w-15 h-15 lg:w-28 lg:h-28">*/}
-                  {/*        <AvatarImage alt={ROOM_DATA.rooms[id].name} src={ROOM_DATA.rooms[id].imageUrl} />*/}
-                  {/*        <AvatarFallback>{ROOM_DATA.rooms[id].id}</AvatarFallback>*/}
-                  {/*    </Avatar>*/}
-                  {/*</div>*/}
-                  <Swiper
-                    direction={"horizontal"}
-                    pagination={{
-                        clickable: true,
-                    }}
-                    mousewheel={true}
-                    modules={[Pagination,Mousewheel]}
-                    onSlideChange={() => console.log("slide change")}
-                    onSwiper={(swiper) => console.log(swiper)}
-                    className="h-32"
-                  >
-                      <SwiperSlide className="bg-amber-200">Room Picture 1</SwiperSlide>
-                      <SwiperSlide className="bg-emerald-200">Room Picture 2</SwiperSlide>
-                      <SwiperSlide className="bg-teal-400">Room Picture 3</SwiperSlide>
-                      <SwiperSlide className="bg-sky-700">Room Picture 4</SwiperSlide>
-                      <SwiperSlide className="bg-fuchsia-300">Room Picture 5</SwiperSlide>
-                      <SwiperSlide className="bg-rose-400">Room Picture 6</SwiperSlide>
+
+                <Swiper
+                  navigation={true}
+                  modules={[Navigation]}
+                  className="h-32"
+                >
+
+                  <>
+                    {
+                      ROOM_DATA.rooms[id].rooms_img_url.map((roomUrl, imgIndex) => (
+                        <SwiperSlide key={`roomID:${id}-${imgIndex}`} className="relative w-full h-full">
+                          <Image
+                            src={roomUrl}
+                            alt={`Room Picture ${imgIndex + 1}`}
+                            fill={true}
+                            className="object-cover"
+                          />
+                        </SwiperSlide>
+                      )
+                      )
+                    }
+
+
+                  </>
+
                   </Swiper>
 
                   {amenities.map((amenity) => (
