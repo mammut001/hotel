@@ -57,6 +57,8 @@
     "react-dom": "18.2.0",
     "reactjs-popup": "^2.0.6",
     "reflect-metadata": "^0.2.2",
+    "stream-chat": "^8.40.2",
+    "stream-chat-react": "^11.23.9",
     "styled-components": "^6.1.12",
     "swiper": "^11.1.12",
     "tailwind-merge": "^2.2.0",
