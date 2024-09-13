@@ -14,9 +14,9 @@ import { ChannelSort, StreamChat } from "stream-chat";
 import Button from "@mui/material/Button";
 import {DeleteIcon} from "lucide-react";
 
-const apiKey = process.env.STREAMCHAT_API_KEY;
-const userId = process.env.STREAMCHAT_USER_ID;
-const token = process.env.STREAMCHAT_TOKEN;
+const apiKey = process.env.NEXT_PUBLIC_STREAMCHAT_API_KEY
+
+console.log("KEY IS ::"+apiKey)
 
 import { useChatWindowStore } from "@/store/useChatWindowStore";
 
@@ -26,9 +26,9 @@ const user = {
   image: 'https://getstream.imgix.net/images/random_svg/ZS.png'
 }
 
-const filters = { members: { $in: [userId] }, type: 'messaging' }
-const options = { presence: true, state: true }
-const sort: ChannelSort = { last_message_at: -1 }
+// const filters = { members: { $in: [userId] }, type: 'messaging' }
+// const options = { presence: true, state: true }
+// const sort: ChannelSort = { last_message_at: -1 }
 
 
 export const ChatWindow: React.FC = () => {
@@ -47,7 +47,7 @@ export const ChatWindow: React.FC = () => {
 
         const channel = chatClient.channel('messaging', 'talk1', {
           image: 'https://getstream.imgix.net/images/random_svg/CZ.png',
-          name: 'Chat',
+          name: 'Talk to Us',
           members: [user.id],
         });
 
@@ -60,7 +60,7 @@ export const ChatWindow: React.FC = () => {
       }
     }
 
-    init();
+    init()
 
     return () => {
       if (client) {
